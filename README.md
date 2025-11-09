@@ -10,7 +10,7 @@ The hardware is simple: an ESP32, some LEDs, a few buttons. Once you build it, y
 
 ## Why This Exists
 
-My brother Luke showed me how bad moderin interfaces are. Watching him struggle with interfaces designed for perfect minds showed me: technology should adapt to humans, not force humans to adapt.
+My brother Luke showed me how bad modern interfaces are. Watching him struggle with interfaces designed for perfect minds showed me: technology should adapt to humans, not force humans to adapt.
 
 Most "smart" devices optimize for engagement. CRUMB optimizes for presence.
 
