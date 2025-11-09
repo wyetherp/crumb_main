@@ -44,7 +44,8 @@ If a fork serves people better, we celebrate it. If someone builds something we 
 
 **##The Luke test**
 1. CRUMB seeks to be physically resiliant. if you can break it its too fragile, a CRUMB should be built to last
-2. 
+2. My brother Luke showed me how limited most technology is. If luke/anyone would have trouble interacting with an interface, it fails the Luke test
+3. The Luke test serves as a way to keep Crumb usable and resilient. Physically tough, but easy to use is the goal. 
 
 ## The Path Forward
 
@@ -56,7 +57,7 @@ Breaking down the wall requires:
 
 Every person who builds a CRUMB and understands how it works is one less person on the wrong side of the wall.
 
-Every device that gets modified for a specific need is proof that technology can serve humans, not corporations.
+Every device that gets modified for a specific need is growth to the Crumb network.
 
 Every project that wouldn't exist in a closed system is a win for what technology could be.
 
