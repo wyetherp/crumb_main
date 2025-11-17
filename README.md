@@ -3,6 +3,8 @@
 
 Learn to build computers with zero experience. $12, 5 minutes, no prerequisites.
 
+The goal of CRUMB is to teach you what computers are/how to communicate with them, once you understand how to communicate with it, you can build anything
+
 ---
 
 ## What You'll Build
