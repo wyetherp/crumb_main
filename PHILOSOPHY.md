@@ -1,12 +1,18 @@
 Philosophy
+
 The Realization
+
 I wanted to understand how my iPad worked.
+
 Not "how to use it"—I knew that. I wanted to understand how the THING ITSELF worked. How touching glass made pixels move. How code became action.
 So I started digging. And I realized: I could build this.
 Not easily. Not quickly. But the components? Available. The knowledge? Documented. The only difference between me and the people who built it? They already knew. I didn't yet.
+
 That's when it hit me: technology isn't magic. It's just knowledge I didn't have access to.
+
 The Wall
 There's a gap between "people who build technology" and "everyone else."
+
 This gap isn't natural. It's maintained.
 Not through evil schemes—just through:
 
@@ -59,6 +65,7 @@ If a fork serves people better, we celebrate it. If someone builds something we 
 The goal isn't to own the ecosystem. It's to make the ecosystem possible.
 The Luke Test
 My brother Luke showed me how limited most technology is.
+
 The Luke Test:
 
 Physical resilience - If you can break it easily, it's too fragile. A CRUMB should be built to last.
