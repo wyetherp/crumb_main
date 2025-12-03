@@ -1,124 +1,130 @@
-CRUMB
+# CRUMB
 
-Make a computer pulse like a heartbeat. 15 minutes. $12. Zero experience.
-What You're Building
-Genesis Zero: An LED that pulses like a heartbeat. On a computer you programmed.
-That's it. Once you can make a light blink, you can control anything—buttons, sensors, displays, motors. The pattern is the same.
+**Instead of selling you a device, I'm going to teach you how to build one.**
 
-What You Need
+---
 
-ESP32 board (~$12 on Amazon - search "ESP32 DevKit")
-USB-C cable (data transfer, not just charging, Apple cables work best)
-Computer with USB or USB-C port
-Chrome or Edge browser
+## The Problem
 
+Technology is a black box. There could be a hamster on a wheel inside your phone and you'd never know.
 
-How To Do It (The Easy Way)
-Reality check: This sounds complicated. It's not.
-Steps:
+We're surrounded by computers - phones, cars, speakers, everything - and we're taught to treat them like magic. Don't touch. Don't ask. Just consume.
 
-Go to wyetherp.com/flash (Dec 5th)
-Plug in the ESP32 via USB
-Click "Flash Genesis Zero"
-Select your USB port when prompted
-Wait 30 seconds
-Watch it pulse
+But here's the secret: **every computer ever made follows the same pattern.**
 
-That's it. No installation. No setup. No compatibility hell.
-Video tutorial: [YouTube link - coming Dec 5th]
+```
+Input → Process → Output
+```
 
-If That Doesn't Work (Or You Want To Modify Code)
-Web flashing works 90% of the time. But if you hit the 10%:
-Arduino IDE Method:
+Your phone takes a tap, figures out what you meant, shows you the result. A $12 microcontroller does the same thing. The only difference is complexity. And complexity, you can learn.
 
-Install Arduino IDE (arduino.cc/software)
-Add ESP32 support (paste this in Preferences → Board Manager URLs):
+---
 
-   https://dl.espressif.com/dl/package_esp32_index.json
+## What CRUMB Is
 
-Open /software/genesis_zero/genesis_zero.ino
-Upload
+CRUMB is a free, open-source tutorial that teaches you to program a computer in 15 minutes.
 
-Why you'd use Arduino IDE:
+You'll make an LED pulse like a heartbeat. That's it. That's Genesis Zero.
 
-Web flash didn't work (rare, but happens)
-You want to modify the code (change speed, brightness, pattern)
-You want to build Genesis One, Two, etc. (requires code editing)
+But here's why it matters: **once you can make a light blink, you can control anything.** Buttons, sensors, displays, motors - the pattern is the same.
 
-For Genesis Zero? Just use the website. It's easier.
+This isn't a product. It's a foundation.
 
-Your Unfair Advantage
+- **Genesis Zero**: Wake up the brain (the LED pulses)
+- **Genesis One**: Give it senses (add sensors)
+- **Genesis Two**: Let it speak (add display/output)
+- **Genesis ∞**: Build whatever you need
+
+A meditation timer. A plant monitor that texts you. A custom game controller. A companion that sits on your desk. The choice is yours.
+
+---
+
+## What You Need
+
+- **ESP32 board** (~$12 on Amazon, search "ESP32 DevKit")
+- **USB cable** (data transfer, not just charging)
+- **Chrome or Edge browser**
+
+That's it. No software to install. No experience required.
+
+---
+
+## Start Here
+
+### [→ wyetherp.com/crumb](https://wyetherp.com/crumb)
+
+1. Plug in the ESP32
+2. Click "Flash Genesis Zero"
+3. Wait 30 seconds
+4. Watch it pulse
+
+**You just programmed a computer.**
+
+---
+
+## The Philosophy
+
+CRUMB is:
+
+- **Free.** No subscription. No upsell. No ads.
+- **Open source.** See every line of code. Modify it. Share it.
+- **Non-profit.** This exists to teach, not to extract.
+
+The world doesn't need another gadget you buy, use, and throw away. It needs people who understand how the gadget works in the first place.
+
+I'm not going to sell you a device. I'm going to teach you how to build one.
+
+---
+
+## Your Unfair Advantage
+
 You have AI. Previous generations didn't.
-Think about it:
 
-Stuck at 2am? AI is awake
-Don't understand an error? AI explains it in 10 seconds
-Want to try something different? AI rewrites the code for you
-Feel stupid asking? AI doesn't judge
+Stuck at 2am? AI is awake. Don't understand an error? AI explains it in 10 seconds. Feel stupid asking? AI doesn't judge.
 
 The best teacher of a computer is another computer.
-You're not learning alone. You have a 24/7 dedicated tutor that knows every error message, speaks every programming language, and has infinite patience.
-This is why NOW is the easiest time in history to learn this.
 
-What ESP32 Actually Is
-It sounds scary. It's not.
-ESP32 = small computer ($12) that you can program.
-That's it. It's not magic. It's just a computer that:
+---
 
-Fits in your hand
-Runs code you write
-Controls lights, sensors, buttons, motors, whatever
+## Troubleshooting
 
-When you "flash code," you're just installing a program. Like installing an app on your phone, except YOU wrote the app.
+**Web flash didn't work?**
+- Try a different USB cable (must support data, not just power)
+- Try holding the BOOT button while flashing
+- Paste the error into ChatGPT or Claude - they'll fix it
 
-What's Next
-After Genesis Zero (15 min):
+**Still stuck?** Open an issue or start a discussion.
 
-Genesis One (45 min): Connect your own LED, not the built-in one
-Genesis Two+: Add buttons, sensors, displays—whatever you want
+---
 
-Or just build:
+## What's Inside
 
-Meditation timer that breathes with you
-Plant monitor that texts when thirsty
-Custom game controller
-Smart lights
-Whatever you need
+```
+/software/genesis_zero/    → The LED heartbeat code
+/software/genesis_one/     → Add your own components
+/examples/                 → Buttons, sensors, displays
+```
 
-Once you understand the pattern, you can build anything.
+---
 
-Troubleshooting
-Web flash didn't work?
+## License
 
-Try a different USB cable (must support data, not just power)
-Try a different USB port
-Try pressing and holding the BOOT button on the ESP32 while flashing
-Copy the error into ChatGPT/Claude - they'll probably fix it
+GPL-3.0. Build it, modify it, sell it, share it - just keep it open.
 
-Still stuck? Open an issue or ask in Discussions
+---
 
-Files
+## Contact
 
-For Genesis Zero: Just use the website (easiest)
-Want to modify code? /software/genesis_zero/genesis_zero.ino
-Genesis One+: /software/genesis_one/
-Examples: /examples/ (buttons, sensors, displays)
+- **Questions?** Open a discussion
+- **Bugs?** Open an issue
+- **Email:** wja326@lehigh.edu
 
+---
 
-Status
-✅ Available now: Code, instructions, AI troubleshooting
-🚧 Coming DEC 5th: Web flasher, video tutorial, starter kit ordering
+**15 minutes. $12. No magic. No hamsters. Just you.**
 
-Questions?
+You're a builder now.
 
-Stuck? Copy error into ChatGPT/Claude
-Technical issue? Open an issue
-General question? Start a discussion
-Email: wja326@lehigh.edu
+---
 
-
-License: GPL-3.0 (build it, modify it, sell it, share it - just keep it open)
-Made by Wyeth Anzilotti | 2025
-
-That's it. Plug in. Click flash. Watch it pulse. $12, 15 minutes, AI in your corner.
-Go build.
+*Made by Wyeth Anzilotti | 2025*
