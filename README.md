@@ -72,7 +72,6 @@ CRUMB is:
 
 The world doesn't need another gadget you buy, use, and throw away. It needs people who understand how the gadget works in the first place.
 
-I'm not going to sell you a device. I'm going to teach you how to build one.
 
 ---
 
@@ -92,18 +91,9 @@ The best teacher of a computer is another computer.
 - Try a different USB cable (must support data, not just power)
 - Try holding the BOOT button while flashing
 - Paste the error into ChatGPT or Claude - they'll fix it
+- The nuclear option is switch to the Arduino IDE, however this is a rather complicated step
 
 **Still stuck?** Open an issue or start a discussion.
-
----
-
-## What's Inside
-
-```
-/software/genesis_zero/    → The LED heartbeat code
-/software/genesis_one/     → Add your own components
-/examples/                 → Buttons, sensors, displays
-```
 
 ---
 
