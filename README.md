@@ -51,7 +51,7 @@ That's it. No software to install. No experience required.
 
 ## Start Here
 
-### [→ wyetherp.com/crumb](https://wyetherp.com/crumb)
+### [→ wyetherp.com](https://wyetherp.com)
 
 1. Plug in the ESP32
 2. Click "Flash Genesis Zero"
