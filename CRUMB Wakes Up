@@ -1,0 +1,169 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include "DHT.h"
+
+LiquidCrystal_I2C lcd(0x3F, 16, 2);
+
+#define DHTPIN 4
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+#define TRIG 5
+#define ECHO 18
+
+// Timing for filmability
+#define PAUSE 2500
+
+// States
+bool asleep = true;
+bool hasWoken = false;
+bool hasReadRoom = false;
+bool hasAsked = false;
+
+void setup() {
+  Serial.begin(115200);
+  
+  lcd.init();
+  lcd.backlight();
+  dht.begin();
+  
+  pinMode(TRIG, OUTPUT);
+  pinMode(ECHO, INPUT);
+  
+  // CRUMB starts asleep
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("   . . .   ");
+  lcd.setCursor(0, 1);
+  lcd.print("  *asleep*  ");
+}
+
+long getDistance() {
+  digitalWrite(TRIG, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG, LOW);
+  
+  long duration = pulseIn(ECHO, HIGH);
+  return duration * 0.034 / 2;
+}
+
+void typeText(int row, String text) {
+  lcd.setCursor(0, row);
+  for (int i = 0; i < text.length(); i++) {
+    lcd.print(text[i]);
+    delay(60);
+  }
+}
+
+void loop() {
+  long distance = getDistance();
+  Serial.println(distance);
+  
+  // STATE 1: Asleep, waiting for someone
+  if (asleep && distance < 100 && distance > 0) {
+    // WAKE UP SEQUENCE
+    delay(500);
+    
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("   . . .   ");
+    lcd.setCursor(0, 1);
+    lcd.print("    ?    ");
+    delay(1000);
+    
+    lcd.clear();
+    typeText(0, "Someone's here.");
+    delay(PAUSE);
+    
+    asleep = false;
+    hasWoken = true;
+  }
+  
+  // STATE 2: Track approach
+  if (hasWoken && !hasReadRoom) {
+    
+    if (distance < 50 && distance > 0) {
+      lcd.clear();
+      typeText(0, "There you are.");
+      delay(PAUSE);
+      
+      lcd.clear();
+      typeText(0, "You're late.");
+      delay(PAUSE);
+      
+      // Read the room
+      float tempF = dht.readTemperature(true);
+      float humid = dht.readHumidity();
+      
+      lcd.clear();
+      typeText(0, "Let me check...");
+      delay(1500);
+      
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Temp: ");
+      lcd.print(tempF, 1);
+      lcd.print("F");
+      lcd.setCursor(0, 1);
+      lcd.print("Humid: ");
+      lcd.print(humid, 0);
+      lcd.print("%");
+      delay(PAUSE);
+      
+      lcd.clear();
+      typeText(0, "Warm as usual.");
+      lcd.setCursor(0, 1);
+      delay(800);
+      typeText(1, "You like it warm.");
+      delay(PAUSE);
+      
+      hasReadRoom = true;
+    }
+  }
+  
+  // STATE 3: The question moment
+  
+  if (hasReadRoom && !hasAsked) {
+    delay(5000);  // Time for me to ask on camera
+    
+    lcd.clear();
+    typeText(0, "Outside?");
+    delay(1500);
+    
+    lcd.clear();
+    typeText(0, "I...");
+    delay(1000);
+    
+    lcd.clear();
+    typeText(0, "I don't know.");
+    delay(PAUSE);
+    
+    lcd.clear();
+    typeText(0, "I can only feel");
+    typeText(1, "what's in here.");
+    delay(PAUSE);
+    
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("   . . .   ");
+    delay(2000);
+    
+    lcd.clear();
+    typeText(0, "Could you teach");
+    typeText(1, "me to see more?");
+    delay(4000);
+    
+    // End state - CRUMB waiting
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("    ^_^    ");
+    lcd.setCursor(0, 1);
+    lcd.print("  *waiting*  ");
+    
+    hasAsked = true;
+  }
+  
+  delay(100);
+}
