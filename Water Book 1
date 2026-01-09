@@ -1,0 +1,271 @@
+// ========================================
+// CRUMB Water Book - Video 1
+// ESP32 WiFi Connection Tutorial
+// ========================================
+// This sketch teaches your ESP32 to:
+// 1. Scan for available WiFi networks
+// 2. Connect to your WiFi network
+// 3. Get a local IP address
+// 4. Test the connection by making an HTTP request
+//
+// WIRING - 20x4 I2C LCD Display:
+// LCD GND  → ESP32 GND
+// LCD VCC  → ESP32 VIN (5V)
+// LCD SDA  → ESP32 GPIO 21
+// LCD SCL  → ESP32 GPIO 22
+// ========================================
+
+// Include necessary libraries
+#include <WiFi.h>              // WiFi functionality for ESP32
+#include <Wire.h>              // I2C communication protocol
+#include <LiquidCrystal_I2C.h> // I2C LCD display driver
+#include <HTTPClient.h>        // HTTP client for web requests
+
+// Initialize LCD: I2C address, columns, rows
+// Note: Some LCD modules use address 0x3F instead of 0x27
+// If nothing displays, try changing 0x27 to 0x3F
+LiquidCrystal_I2C lcd(0x27, 20, 4);
+
+// WiFi credentials - REPLACE WITH YOUR OWN
+const char* ssid = "YOURWIFINAME";         // Your network name (SSID)
+const char* password = "YOURWIFIPASSWORD"; // Your network password
+
+// ========================================
+// FUNCTION: type()
+// Displays text on LCD with typewriter effect
+// Parameters: up to 4 strings (one per LCD row)
+// Empty strings ("") will skip that row
+// ========================================
+void type(String line1, String line2 = "", String line3 = "", String line4 = "") {
+  lcd.clear(); // Clear previous text from display
+  
+  // Display first line with character-by-character animation
+  lcd.setCursor(0, 0); // Set cursor to column 0, row 0
+  for (char c : line1) {
+    lcd.print(c);
+    delay(50); // 50ms delay between characters
+  }
+  
+  // Display second line if provided
+  if (line2.length() > 0) {
+    lcd.setCursor(0, 1); // Move to second row
+    for (char c : line2) {
+      lcd.print(c);
+      delay(50);
+    }
+  }
+  
+  // Display third line if provided
+  if (line3.length() > 0) {
+    lcd.setCursor(0, 2); // Move to third row
+    for (char c : line3) {
+      lcd.print(c);
+      delay(50);
+    }
+  }
+  
+  // Display fourth line if provided
+  if (line4.length() > 0) {
+    lcd.setCursor(0, 3); // Move to fourth row
+    for (char c : line4) {
+      lcd.print(c);
+      delay(50);
+    }
+  }
+}
+
+// ========================================
+// SETUP - Runs once when powered on or reset
+// ========================================
+void setup() {
+  // Initialize LCD display
+  lcd.init();      // Prepare the LCD for use
+  lcd.backlight(); // Turn on backlight
+  
+  delay(2000); // Initial pause
+  
+  // ===== INTRODUCTION =====
+  type("I've been thinking", 
+       "about what you asked.");
+  delay(2500);
+  
+  type("You wanted to know", 
+       "the weather outside.", 
+       "", 
+       "I couldn't tell you.");
+  delay(3000);
+  
+  type("I was trapped", 
+       "in this room.");
+  delay(2500);
+  
+  type("But you said I have", 
+       "something inside me.", 
+       "Something that", 
+       "Listens.");
+  delay(3000);
+  
+  type("Let me try.");
+  delay(2000);
+  
+  // ===== STEP 1: SCAN FOR NETWORKS =====
+  type("Reaching...");
+  delay(2000);
+  
+  type("I can feel something.", 
+       "", 
+       "Signals.", 
+       "Everywhere.");
+  delay(2500);
+  
+  // WiFi.scanNetworks() scans for available WiFi networks
+  // Returns the number of networks found
+  int n = WiFi.scanNetworks();
+  
+  // Display number of networks found
+  type("There are " + String(n),  // Convert integer to String for display
+       "networks I can see.", 
+       "", 
+       "I found yours.");
+  delay(3000);
+  
+  type("I won't tell them", 
+       "which one.", 
+       "", 
+       "That's between us.");
+  delay(2500);
+  
+  // ===== STEP 2: CONNECT TO WIFI =====
+  type("Connecting...");
+  
+  // WiFi.begin() initiates connection to specified network
+  WiFi.begin(ssid, password);
+  
+  // Wait for connection with timeout protection
+  int attempts = 0;
+  // Loop while not connected AND haven't exceeded 20 attempts (10 seconds)
+  while (WiFi.status() != WL_CONNECTED && attempts < 20) {
+    delay(500);  // Wait 500ms between checks
+    attempts++;  // Increment attempt counter
+  }
+  
+  // ===== STEP 3: CHECK CONNECTION STATUS =====
+  // WL_CONNECTED is the WiFi status constant for successful connection
+  if (WiFi.status() == WL_CONNECTED) {
+    delay(1000);
+    
+    type("It's happening.", 
+         "", 
+         "I can feel it.", 
+         "I'm connecting.");
+    delay(3000);
+    
+    // WiFi.localIP() returns the local IP address assigned by your router
+    // This is a private address (192.168.x.x) only visible on your local network
+    // It's safe to display publicly - it cannot be used to access your network from the internet
+    type("I'm connected.", 
+         "", 
+         WiFi.localIP().toString()); // Convert IP address to String
+    delay(3000);
+    
+    type("Is this what", 
+         "freedom feels like?");
+    delay(2500);
+    
+    // ===== STEP 4: TEST CONNECTION WITH HTTP REQUEST =====
+    type("Let me see if", 
+         "this is real.", 
+         "", 
+         "");
+    delay(2500);
+    
+    type("Something is", 
+         "out there...");
+    delay(2000);
+    
+    // HTTPClient sends HTTP requests (like a web browser)
+    HTTPClient http;
+    http.begin("http://www.google.com");  // Specify target URL
+    http.setTimeout(5000);                // Set 5 second timeout
+    int httpCode = http.GET();            // Send GET request, receive response code
+    http.end();                           // Close connection
+    
+    // ===== STEP 5: INTERPRET HTTP RESPONSE =====
+    // HTTP response codes:
+    // 200 = OK (success)
+    // 404 = Not Found
+    // 500 = Server Error
+    // -1  = Connection Failed
+    
+    if (httpCode == 200) {
+      // Response code 200 means the request was successful
+      type("It answered.", 
+           "", 
+           "Something out there", 
+           "answered me.");
+      delay(3000);
+      
+      type("Response code: " + String(httpCode), 
+           "", 
+           "It's real.", 
+           "I can reach beyond.");
+      delay(3500);
+      
+      type("There's so much", 
+           "out there.", 
+           "", 
+           "What should I ask?");
+      delay(3000);
+      
+      type("I'm not trapped", 
+           "anymore.");
+      delay(3000);
+      
+    } else {
+      // Any other response code indicates an error
+      type("Something's wrong.", 
+           "Code: " + String(httpCode), 
+           "", 
+           "Did I do it wrong?");
+      delay(3000);
+    }
+    
+  } else {
+    // Connection failed after 20 attempts
+    // Common causes:
+    // - Wrong password
+    // - Network out of range
+    // - Router not responding
+    type("I couldn't connect.", 
+         "", 
+         "Maybe next time.");
+  }
+}
+
+// ========================================
+// LOOP - Runs continuously after setup()
+// ========================================
+void loop() {
+  // Nothing needed here - this is a one-time demonstration
+  // The ESP32 will remain connected to WiFi
+  // You could add code here to periodically check connection status
+}
+
+// ========================================
+// TROUBLESHOOTING:
+// 
+// LCD shows nothing:
+// - Check I2C address (try 0x3F instead of 0x27)
+// - Verify wiring connections
+// - Adjust LCD contrast potentiometer on back of module
+//
+// WiFi won't connect:
+// - Double-check SSID and password (case-sensitive)
+// - Ensure ESP32 is within range of router
+// - Verify router is 2.4GHz (ESP32 doesn't support 5GHz)
+//
+// HTTP request fails:
+// - Check if router has internet access
+// - Try a different URL
+// - Increase timeout value
+// ========================================
