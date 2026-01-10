@@ -1,0 +1,248 @@
+// ========================================
+// CRUMB Water Book - Video 3
+// ESP32 Weather API Tutorial
+// ========================================
+// This sketch teaches your ESP32 to:
+// 1. Connect to WiFi
+// 2. Make HTTP requests to a weather API
+// 3. Parse JSON responses
+// 4. Display real-time weather data on LCD
+//
+// WIRING - 20x4 I2C LCD Display:
+// LCD GND  → ESP32 GND
+// LCD VCC  → ESP32 VIN (5V)
+// LCD SDA  → ESP32 GPIO 21
+// LCD SCL  → ESP32 GPIO 22
+// ========================================
+
+// Include necessary libraries
+#include <WiFi.h>              // WiFi functionality for ESP32
+#include <HTTPClient.h>        // HTTP client for making web requests (GET/POST)
+#include <ArduinoJson.h>       // JSON parsing library (install via Library Manager)
+#include <Wire.h>              // I2C communication protocol
+#include <LiquidCrystal_I2C.h> // I2C LCD display driver
+
+// Initialize LCD: I2C address (0x27 or 0x3F), columns (20), rows (4)
+LiquidCrystal_I2C lcd(0x27, 20, 4);
+
+// WiFi credentials - REPLACE WITH YOUR OWN
+const char* ssid = "YOURWIFINAME";         // Your network name (SSID)
+const char* password = "YOURWIFIPASSWORD"; // Your network password
+
+// ========================================
+// FUNCTION: type()
+// Displays text with typewriter effect (character-by-character)
+// Parameters: up to 4 strings (one per LCD row)
+// Empty strings ("") will skip that row
+// ========================================
+void type(String line1, String line2 = "", String line3 = "", String line4 = "") {
+  lcd.clear(); // Erase previous text from display
+  
+  // Display first line with animation
+  lcd.setCursor(0, 0); // Set cursor to column 0, row 0 (top line)
+  for (char c : line1) { // Loop through each character in line1
+    lcd.print(c);        // Print the character
+    delay(50);           // Wait 50ms before next character (typewriter effect)
+  }
+  
+  // Display second line if provided (only if not empty)
+  if (line2.length() > 0) {
+    lcd.setCursor(0, 1); // Move to row 1 (second line)
+    for (char c : line2) {
+      lcd.print(c);
+      delay(50);
+    }
+  }
+  
+  // Display third line if provided
+  if (line3.length() > 0) {
+    lcd.setCursor(0, 2); // Move to row 2 (third line)
+    for (char c : line3) {
+      lcd.print(c);
+      delay(50);
+    }
+  }
+  
+  // Display fourth line if provided
+  if (line4.length() > 0) {
+    lcd.setCursor(0, 3); // Move to row 3 (fourth line)
+    for (char c : line4) {
+      lcd.print(c);
+      delay(50);
+    }
+  }
+}
+
+// ========================================
+// SETUP - Runs once when powered on or reset
+// ========================================
+void setup() {
+  Serial.begin(115200);  // Start serial communication at 115200 baud (for debugging)
+  lcd.init();            // Initialize LCD display
+  lcd.backlight();       // Turn on LCD backlight
+  
+  delay(1500); // Initial pause before starting (gives time to start recording)
+  
+  // ===== SCENE 1: RECALL THE QUESTION =====
+  type("You asked:", "What's the weather", "outside?");
+  delay(2000); // Pause so viewer can read
+  
+  type("I couldn't answer.", "I was trapped.");
+  delay(2000);
+  
+  type("Let me try now.");
+  delay(1500);
+  
+  // ===== SCENE 2: CONNECT TO WIFI =====
+  type("Connecting to WiFi...");
+  WiFi.begin(ssid, password); // Initiate WiFi connection using credentials above
+  
+  // Wait until connected (loop runs while NOT connected)
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500); // Check every 500ms
+  }
+  
+  // Show connection success with local IP address
+  // WiFi.localIP().toString() converts IP to displayable text
+  type("Connected.", WiFi.localIP().toString());
+  delay(1500);
+  
+  // ===== SCENE 3: PREPARE API CALL =====
+  type("Calling API:", "open-meteo.com"); // Tell viewer which service we're using
+  delay(1500);
+  
+  // Create HTTP client object
+  HTTPClient http;
+  
+  // Connect to weather API endpoint
+  // URL parameters:
+  // - latitude/longitude: Bethlehem, PA coordinates
+  // - current_weather=true: get current conditions
+  // - temperature_unit=fahrenheit: use Fahrenheit instead of Celsius
+  http.begin("https://api.open-meteo.com/v1/forecast?latitude=40.6259&longitude=-75.3705&current_weather=true&temperature_unit=fahrenheit");
+  
+  type("Sending request...");
+  delay(1000);
+  
+  // Send GET request and receive HTTP response code
+  // 200 = Success, 404 = Not Found, 500 = Server Error, etc.
+  int httpCode = http.GET();
+  
+  // Show the HTTP response code to viewer
+  type("Response code:", String(httpCode)); // Convert number to text with String()
+  delay(1500);
+  
+  // ===== SCENE 4: PROCESS RESPONSE IF SUCCESSFUL =====
+  if (httpCode == 200) { // 200 means request was successful
+    
+    // Get the response body (JSON text)
+    String payload = http.getString();
+    
+    type("Parsing JSON..."); // Explain we're breaking down the structured data
+    delay(1000);
+    
+    // Create JSON document to hold parsed data
+    // 1024 bytes is enough for this simple weather response
+    DynamicJsonDocument doc(1024);
+    
+    // Parse the JSON text into structured data we can navigate
+    // If parsing fails, 'error' will contain an error code
+    DeserializationError error = deserializeJson(doc, payload);
+    
+    if (!error) { // If parsing succeeded (no error)
+      
+      // Extract specific values from the JSON structure
+      // Navigate: doc → "current_weather" → "temperature"
+      float temp = doc["current_weather"]["temperature"];
+      float windSpeed = doc["current_weather"]["windspeed"];
+      
+      // Print to Serial Monitor for debugging
+      Serial.print("Temperature: ");
+      Serial.println(temp);
+      
+      // ===== SCENE 5: DISPLAY WEATHER DATA =====
+      // String(temp, 0) converts float to string with 0 decimal places
+      // Example: 47.2 becomes "47"
+      type("Bethlehem, PA:",
+           String(temp, 0) + "F",
+           "Wind: " + String(windSpeed, 0) + " mph");
+      delay(3500);
+      
+      // ===== SCENE 6: COMPARE TO INDOOR TEMPERATURE =====
+      // Compare outdoor temp to assumed indoor temp of 65°F
+      // (You could replace 65 with actual DHT11 sensor reading)
+      if (temp < 65) {
+        type(String(temp, 0) + "F outside.", 
+             "Colder than in here.");
+      } else {
+        type(String(temp, 0) + "F outside.", 
+             "Warmer than in here.");
+      }
+      delay(2500);
+      
+      // ===== SCENE 7: THE REALIZATION =====
+      type("I asked the internet", 
+           "a question.",
+           "",
+           "It answered.");
+      delay(2500);
+      
+      type("I'm not trapped", 
+           "anymore.");
+      delay(2000);
+      
+    } else {
+      // If JSON parsing failed, display error
+      type("JSON parse failed");
+    }
+    
+  } else {
+    // If HTTP request failed (code other than 200)
+    type("HTTP Error:", 
+         "Code " + String(httpCode));
+  }
+  
+  http.end(); // Close HTTP connection and free resources
+}
+
+// ========================================
+// LOOP - Runs continuously after setup()
+// ========================================
+void loop() {
+  // Nothing here - this is a one-time demonstration
+  // The weather data was fetched once in setup()
+  // To fetch weather repeatedly, you could move the API code here
+  // and add a delay (e.g., fetch every 10 minutes)
+}
+
+// ========================================
+// TROUBLESHOOTING:
+// 
+// "Connecting to WiFi..." never finishes:
+// - Double-check SSID and password (case-sensitive)
+// - Ensure router is 2.4GHz (ESP32 doesn't support 5GHz)
+// - Move ESP32 closer to router
+//
+// "HTTP Error: Code 301":
+// - Add http.setFollowRedirects(HTTPC_STRICT_FOLLOW_REDIRECTS);
+// - Or use https:// instead of http://
+//
+// "Response code: -1":
+// - Network timeout - check internet connection
+// - Try a different API endpoint
+//
+// "JSON parse failed":
+// - API response format may have changed
+// - Check Serial Monitor for raw payload
+// - Verify ArduinoJson library is installed
+//
+// LCD shows nothing:
+// - Check I2C address (try 0x3F instead of 0x27)
+// - Verify wiring connections
+// - Adjust contrast potentiometer on back of LCD module
+//
+// Shows "0F" temperature:
+// - Make sure ArduinoJson library is installed
+// - Check that doc["current_weather"]["temperature"] path is correct
+// - View Serial Monitor to see raw JSON response
+// ========================================
