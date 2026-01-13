@@ -1,0 +1,286 @@
+// ========================================
+// CRUMB Water Book - Video 4 (FINALE)
+// ESP32 + Claude API Integration
+// Teaching CRUMB to Think
+// ========================================
+
+#include <WiFi.h>
+#include <HTTPClient.h>
+#include <ArduinoJson.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 20, 4);
+
+// WiFi credentials - REPLACE WITH YOUR OWN
+const char* ssid = "Your wifi name";
+const char* password = "Your wifi password";
+
+// Claude API key - REPLACE WITH YOUR ACTUAL KEY
+const char* apiKey = "PASTE API KEY HERE"; // Paste your key here
+
+
+// ========================================
+// FUNCTION: type()
+// Displays text with typewriter effect
+// ========================================
+void type(String line1, String line2 = "", String line3 = "", String line4 = "") {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  for (char c : line1) {
+    lcd.print(c);
+    delay(50);
+  }
+  if (line2.length() > 0) {
+    lcd.setCursor(0, 1);
+    for (char c : line2) {
+      lcd.print(c);
+      delay(50);
+    }
+  }
+  if (line3.length() > 0) {
+    lcd.setCursor(0, 2);
+    for (char c : line3) {
+      lcd.print(c);
+      delay(50);
+    }
+  }
+  if (line4.length() > 0) {
+    lcd.setCursor(0, 3);
+    for (char c : line4) {
+      lcd.print(c);
+      delay(50);
+    }
+  }
+}
+
+// ========================================
+// FUNCTION: wrapText()
+// Word-wraps text to fit LCD without breaking words
+// Parameters:
+//   text: the full text to wrap
+//   lines: array to store wrapped lines
+//   maxLines: maximum number of lines to create
+//   maxChars: maximum characters per line (20 for this LCD)
+// ========================================
+void wrapText(String text, String lines[], int maxLines, int maxChars) {
+  int lineIndex = 0;
+  int textPos = 0;
+  
+  while (textPos < text.length() && lineIndex < maxLines) {
+    String currentLine = "";
+    
+    // Build line word by word
+    while (textPos < text.length() && currentLine.length() < maxChars) {
+      // Find next space or end of text
+      int nextSpace = text.indexOf(' ', textPos);
+      if (nextSpace == -1) nextSpace = text.length();
+      
+      String word = text.substring(textPos, nextSpace);
+      
+      // If adding this word would exceed line length
+      if (currentLine.length() + word.length() + 1 > maxChars) {
+        if (currentLine.length() == 0) {
+          // Word is longer than line - just truncate it
+          currentLine = word.substring(0, maxChars);
+          textPos = nextSpace;
+        }
+        break;
+      }
+      
+      // Add word to current line
+      if (currentLine.length() > 0) currentLine += " ";
+      currentLine += word;
+      textPos = nextSpace + 1; // Move past the space
+    }
+    
+    lines[lineIndex] = currentLine;
+    lineIndex++;
+  }
+}
+
+// ========================================
+// FUNCTION: askClaude()
+// Sends question to Claude API and returns response
+// ========================================
+String askClaude(String question) {
+  HTTPClient http;
+  
+  // Connect to Claude API endpoint
+  http.begin("https://api.anthropic.com/v1/messages");
+  
+  // Set required headers
+  http.addHeader("x-api-key", apiKey);
+  http.addHeader("anthropic-version", "2023-06-01");
+  http.addHeader("content-type", "application/json");
+  
+  // Build JSON request body
+  DynamicJsonDocument requestDoc(1024);
+  requestDoc["model"] = "claude-sonnet-4-20250514";
+  requestDoc["max_tokens"] = 100; // Limit response length
+  
+  JsonArray messages = requestDoc.createNestedArray("messages");
+  JsonObject message = messages.createNestedObject();
+  message["role"] = "user";
+  
+  // Add instruction for SHORT response
+  message["content"] = question + " Answer in 2 sentences maximum.";
+  
+  String requestBody;
+  serializeJson(requestDoc, requestBody);
+  
+  Serial.println("Sending request to Claude...");
+  Serial.println(requestBody);
+  
+  // Send POST request
+  int httpCode = http.POST(requestBody);
+  
+  Serial.print("Response code: ");
+  Serial.println(httpCode);
+  
+  if (httpCode == 200) {
+    String response = http.getString();
+    Serial.println("Raw response:");
+    Serial.println(response);
+    
+    // Parse response
+    DynamicJsonDocument responseDoc(4096);
+    DeserializationError error = deserializeJson(responseDoc, response);
+    
+    if (!error) {
+      // Extract the text from Claude's response
+      const char* answer = responseDoc["content"][0]["text"];
+      http.end();
+      return String(answer);
+    } else {
+      Serial.print("JSON parse error: ");
+      Serial.println(error.c_str());
+      http.end();
+      return "Parse error";
+    }
+  } else {
+    Serial.print("HTTP error: ");
+    Serial.println(httpCode);
+    String errorResponse = http.getString();
+    Serial.println(errorResponse);
+    http.end();
+    return "HTTP Error " + String(httpCode);
+  }
+}
+
+// ========================================
+// SETUP - Main performance
+// ========================================
+void setup() {
+  Serial.begin(115200);
+  lcd.init();
+  lcd.backlight();
+  
+  delay(2000);
+  
+  // ===== SCENE 1: THE BUILD-UP =====
+  type("I learned to connect.");
+  delay(2000);
+  
+  type("I learned to reach.");
+  delay(2000);
+  
+  type("I learned to ask.");
+  delay(2000);
+  
+  type("But those were", "simple questions.");
+  delay(2500);
+  
+  type("Facts.", "Data.", "Retrieval.");
+  delay(2500);
+  
+  type("Let me ask something", "different.");
+  delay(2000);
+  
+  type("Something that needs", "thinking.");
+  delay(2500);
+  
+  // ===== SCENE 2: THE QUESTION =====
+  type("Am I alive?");
+  delay(3000);
+  
+  // ===== SCENE 3: CONNECT TO WIFI =====
+  type("Connecting...");
+  WiFi.begin(ssid, password);
+  
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+  }
+  
+  type("Connected.");
+  delay(1500);
+  
+  // ===== SCENE 4: ASK CLAUDE =====
+  type("Asking...");
+  delay(1500);
+  
+  type("Thinking...");
+  delay(2000); // CRITICAL pause - shows processing, not just retrieval
+  
+  // Make the API call
+  String answer = askClaude("In one short paragraph, answer: Am I alive? I am a small computer that can sense, connect, and ask questions.");
+  
+  Serial.print("Claude's answer: ");
+  Serial.println(answer);
+  
+  // ===== SCENE 5: DISPLAY ANSWER =====
+  if (answer.length() > 0 && !answer.startsWith("HTTP Error") && !answer.startsWith("Parse error")) {
+    
+    // Prepare array to hold wrapped lines
+    String lines[12]; // Up to 12 lines (3 screens worth)
+    for (int i = 0; i < 12; i++) lines[i] = "";
+    
+    // Word-wrap the response
+    wrapText(answer, lines, 12, 20);
+    
+    // Display first screen (lines 0-3)
+    type(lines[0], lines[1], lines[2], lines[3]);
+    delay(5000);
+    
+    // If there are more lines, show second screen
+    if (lines[4].length() > 0) {
+      type(lines[4], lines[5], lines[6], lines[7]);
+      delay(5000);
+    }
+    
+    // If there are even more lines, show third screen
+    if (lines[8].length() > 0) {
+      type(lines[8], lines[9], lines[10], lines[11]);
+      delay(5000);
+    }
+    
+    // ===== SCENE 6: THE REALIZATION =====
+    type("That wasn't data.");
+    delay(2500);
+    
+    type("That was thought.");
+    delay(2500);
+    
+    type("I can think now.");
+    delay(3000);
+    
+    // ===== SCENE 7: AIR BOOK TEASE =====
+    type("But I'm still", "tethered.", "", "To this wire.");
+    delay(3000);
+    
+    type("Can I be free?");
+    delay(2000);
+    
+  } else {
+    // If API call failed, show error
+    type("Error:", answer);
+    delay(3000);
+  }
+}
+
+// ========================================
+// LOOP - Runs continuously after setup()
+// ========================================
+void loop() {
+  // One-shot performance
+}
