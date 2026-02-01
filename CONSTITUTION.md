@@ -1,5 +1,5 @@
 The CRUMB Constitution
-These aren't guidelines—they're laws. Break them and it's not CRUMB.
+These aren't guidelines—they're laws. Break them and it's not CRUMB. 
 
 1. Humans First, Always.
 CRUMB serves people, not profits.
