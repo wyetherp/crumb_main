@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🌀 Crumb UI - Minimal Sacred Interface v0.2
+🌀 Crumb UI - Minimal Sacred Interface v0.2 
 Clean, magical, reliable interface for RasPad touchscreen
 Designed with sacred intention and mystical beauty
 """
