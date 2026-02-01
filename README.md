@@ -1,120 +1,150 @@
-# CRUMB
+CRUMB
 
-**Instead of selling you a device, I'm going to teach you how to build one.**
+Build an AI companion from scratch. Understand every component. Own what you make.
 
----
+Instead of selling you a device, I'm teaching you to build one.
 
-## The Problem
+What This Is
 
-Technology is a black box. There could be a hamster on a wheel inside your phone and you'd never know.
+CRUMB is a free, open-source curriculum that takes you from "What's inside a computer?" to "I just built a device that talks to AI."
+15 videos. $30 in parts. Zero to AI companion.
+No prior experience required. No software engineering degree. No magic.
+Just a complete path from absolute fundamentals to a working, intelligent device you built yourself.
 
-We're surrounded by computers - phones, cars, speakers, everything - and we're taught to treat them like magic. Don't touch. Don't ask. Just consume.
+The Curriculum
 
-But here's the secret: **every computer ever made follows the same pattern.**
+📗 Earth Book (Foundation)
+Understand how computers actually work. Bits, binary, your first program, buttons.
+🔥 Fire Book (Sensing)
+Add sensors. Your computer learns to see, feel, and detect presence.
+🌊 Water Book (Connectivity)
+Connect to WiFi. Pull real-time data. Talk to AI language models.
+💨 Air Book (Independence) — Coming Summer 2026
+Battery power. Custom PCB. 3D-printed case. Standalone companion.
+Watch in order. Each video builds on the last. Skip one, you'll be lost.
 
-```
-Input → Process → Output
-```
+What You'll Build
 
-Your phone takes a tap, figures out what you meant, shows you the result. A $12 microcontroller does the same thing. The only difference is complexity. And complexity, you can learn.
+By the end, you'll have a palm-sized device that:
 
----
+Runs on battery power (8+ hours untethered)
+Senses its environment (motion, temperature, distance)
+Connects to the internet (WiFi, APIs, AI models)
+Responds to your presence
+Fits in your pocket
 
-## What CRUMB Is
+And you'll understand how every piece works.
 
-CRUMB is a free, open-source tutorial that teaches you to program a computer in 15 minutes.
+What You Need
 
-You'll make an LED pulse like a heartbeat. That's it. That's Genesis Zero.
+To start:
 
-But here's why it matters: **once you can make a light blink, you can control anything.** Buttons, sensors, displays, motors - the pattern is the same.
+ESP32 board (~$8-12, search "ESP32 DevKit" on Amazon)
+USB cable (data transfer, not just charging)
+Chrome or Edge browser
 
-This isn't a product. It's a foundation.
+Eventually:
 
-- **Genesis Zero**: Wake up the brain (the LED pulses)
-- **Genesis One**: Give it senses (add sensors)
-- **Genesis Two**: Let it speak (add display/output)
-- **Genesis ∞**: Build whatever you need
+Sensors (~$10 total)
+LCD display (~$5)
+Battery + components (~$10)
 
-A meditation timer. A plant monitor that texts you. A custom game controller. A companion that sits on your desk. The choice is yours.
+Total investment: ~$30 for the complete build.
 
----
+Start Here
 
-## What You Need
+→ Watch Earth Book 1 https://www.youtube.com/watch?v=7hc9jpzf6p0
 
-- **ESP32 board** (~$12 on Amazon, search "ESP32 DevKit")
-- **USB cable** (data transfer, not just charging)
-- **Chrome or Edge browser**
+Start with "What's Inside A Computer?"
+Watch in order through Earth → Fire → Water
+Build along as you go
+Ask AI when you get stuck
 
-That's it. No software to install. No experience required.
+Each video is 1-3 minutes. No fluff. Just what you need to know.
 
----
+Why This Exists
 
-## Start Here
+Technology isn't magic. It's just knowledge you don't have yet.
+The gap between "people who build technology" and "everyone else" is artificial. It's maintained through:
 
-### [→ wyetherp.com](https://wyetherp.com)
+Complexity that serves business models, not understanding
+Documentation written for experts, not learners
+Devices designed to be replaced, not repaired
 
-1. Plug in the ESP32
-2. Click "Flash Genesis Zero"
-3. Wait 30 seconds
-4. Watch it pulse
+CRUMB breaks that wall.
 
-**You just programmed a computer.**
+This curriculum exists because my brother Luke deserved technology that worked for him. And because everyone deserves to understand the devices they depend on.
 
----
+The Philosophy
 
-## The Philosophy
+Platform over product.
+CRUMB succeeds when you build something I never imagined. Meditation timer, plant monitor, accessibility device, custom controller—the foundation is the same.
+Open source forever.
 
-CRUMB is:
+GPL-3.0. You can build it, modify it, sell it. Just keep the knowledge flowing.
+Teaching over selling.
 
-- **Free.** No subscription. No upsell. No ads.
-- **Open source.** See every line of code. Modify it. Share it.
-- **Non-profit.** This exists to teach, not to extract.
+No paywalls. No subscriptions. No ads. Just education, freely shared.
 
-The world doesn't need another gadget you buy, use, and throw away. It needs people who understand how the gadget works in the first place.
-
-
----
-
-## Your Unfair Advantage
+Your Unfair Advantage
 
 You have AI. Previous generations didn't.
-
-Stuck at 2am? AI is awake. Don't understand an error? AI explains it in 10 seconds. Feel stupid asking? AI doesn't judge.
-
+Get stuck at 2am? AI is awake.
+Don't understand an error? AI explains in 30 seconds.
+Feel dumb asking? AI doesn't judge.
 The best teacher of a computer is another computer.
+This is the easiest time in history to learn this. The wall is lower than ever.
 
----
+Troubleshooting
 
-## Troubleshooting
+Can't get code to upload?
 
-**Web flash didn't work?**
-- Try a different USB cable (must support data, not just power)
-- Try holding the BOOT button while flashing
-- Paste the error into ChatGPT or Claude - they'll fix it
-- The nuclear option is switch to the Arduino IDE, however this is a rather complicated step
+Try a different USB cable (must support data)
+Try a different USB port
+Paste the error into ChatGPT/Claude—they'll debug it
 
-**Still stuck?** Open an issue or start a discussion.
+Video unclear?
 
----
+Ask AI to explain the concept differently
+Open a GitHub discussion
 
-## License
+Completely stuck?
 
-GPL-3.0. Build it, modify it, sell it, share it - just keep it open.
+Open an issue with: what you tried, what happened, what you expected
+The community (and I) will help
 
----
 
-## Contact
+What Success Looks Like
 
-- **Questions?** Open a discussion
-- **Bugs?** Open an issue
-- **Email:** wja326@lehigh.edu
+CRUMB succeeds when:
 
----
+You build Genesis Zero and realize "I can do this"
+You modify CRUMB for a need I never imagined
+You fix your device instead of replacing it
+You teach someone else to build
 
-**15 minutes. $12. No magic. No hamsters. Just you.**
+CRUMB fails when:
 
-You're a builder now.
+Documentation assumes expertise
+The community gatekeeps
+We prioritize features over clarity
 
----
+If you see this happening, call it out. Open an issue. This only works if we keep it accessible.
 
-*Made by Wyeth Anzilotti | 2025*
+Community
+
+Questions? Start a discussion
+Bugs? Open an issue
+Show your build: Tag #CRUMBbuild on social media
+Email: wja326@lehigh.edu
+
+
+License
+GPL-3.0
+Build it. Modify it. Sell it. Share it. Just keep it open.
+The knowledge belongs to everyone.
+
+You're a builder now. Go build something.
+
+Made by Wyeth Anzilotti | 2026
+Because the wall is artificial and we can break it
