@@ -2,7 +2,7 @@
 // CRUMB Water Book - Video 3
 // ESP32 Weather API Tutorial
 // ========================================
-// This sketch teaches your ESP32 to:
+// This sketch teaches your ESP32 to: 
 // 1. Connect to WiFi
 // 2. Make HTTP requests to a weather API
 // 3. Parse JSON responses
