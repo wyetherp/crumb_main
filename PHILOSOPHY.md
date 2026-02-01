@@ -1,128 +1,143 @@
-Philosophy
+Why CRUMB Exists
+
+The wall between "people who build technology" and "everyone else" is artificial.
+It's maintained through:
+
+Complexity that serves business models, not understanding
+Documentation written for experts, not learners
+Devices designed to be replaced, not repaired
+The assumption that "normal people" shouldn't need to know how things work
+
+CRUMB exists to break that wall.
 
 The Realization
 
-I wanted to understand how my iPad worked.
-
-Not "how to use it"—I knew that. I wanted to understand how the THING ITSELF worked. How touching glass made pixels move. How code became action.
+I wanted to understand how my iPad worked. Not "how to use it"—how the THING ITSELF worked.
 So I started digging. And I realized: I could build this.
-Not easily. Not quickly. But the components? Available. The knowledge? Documented. The only difference between me and the people who built it? They already knew. I didn't yet.
+Not easily. Not quickly. But the components? Available. The knowledge? Documented.
+The only difference between me and the people who built it? They already knew. I didn't yet.
+Technology isn't magic. It's just knowledge you don't have access to. Yet.
 
-That's when it hit me: technology isn't magic. It's just knowledge I didn't have access to.
+Why I Built This
 
-The Wall
-There's a gap between "people who build technology" and "everyone else."
-
-This gap isn't natural. It's maintained.
-Not through evil schemes—just through:
-
-Complexity that serves business models, not users
-Documentation written for experts, not learners
-Systems designed to be replaced, not repaired
-The quiet assumption that "normal people" shouldn't need to understand this
-
-Most people think technology is too complicated for them. It's not. It's just been presented that way.
-What CRUMB Believes
-Knowing how technology works should be a human right.
-Not because everyone needs to become an engineer.
-Because in 2025, technology mediates almost everything:
-
-How you communicate
-How you work
-How you learn
-How you remember
-How you exist in the world
-
-If you don't understand the systems you depend on, you're at their mercy.
-CRUMB exists to change that. Not by tearing down big tech. But by making the knowledge accessible.
-The Mission
-Break the wall between "people who build technology" and "everyone else."
-Not by making technology simpler (it is what it is).
-But by making the PATH TO UNDERSTANDING clearer.
-CRUMB teaches you to build a computer because:
-
-Building forces understanding in a way reading never will
-Once you've built one thing, you realize you can build anything
-Once you CAN build, you stop accepting what you're given
-
-You don't need permission to understand your own devices. You just need a starting point.
-What CRUMB Actually Is
-CRUMB isn't a product. It's a foundation.
-Some people will build meditation timers. Others will build plant monitors, focus tools, notification managers, custom controllers, or things we haven't imagined yet.
-The hardware is deliberately simple: If you can follow a recipe, you can build CRUMB.
-The progression is intentional:
-
-Genesis Zero: You learn the computer CAN control light
-Genesis One: You learn YOU can control WHERE the light is
-Genesis Two+: You learn you can control WHAT the light responds to
-
-Each step removes one layer of mystery. After Genesis Zero, computers aren't black boxes anymore. They're tools you understand.
-Platform Over Product
-CRUMB succeeds when we're NOT the bottleneck.
-Like Arduino, like Linux, like Wikipedia—the value isn't what we build directly. It's what YOU build on the foundation we provide.
-We maintain the standard. You create the future.
-If a fork serves people better, we celebrate it. If someone builds something we didn't imagine, we document it. If the community outgrows us, we've succeeded.
-The goal isn't to own the ecosystem. It's to make the ecosystem possible.
-The Luke Test
 My brother Luke showed me how limited most technology is.
+Most interfaces assume everyone's brain works the same way. Most devices break easily and can't be fixed. Most tech forces you to adapt to IT, not the other way around.
 
-The Luke Test:
+I built CRUMB because Luke deserved better. And so do you.
 
-Physical resilience - If you can break it easily, it's too fragile. A CRUMB should be built to last.
-Interface simplicity - If Luke (or anyone) would struggle to use it, the interface fails.
-Repair clarity - If something breaks, you should be able to fix it without specialized tools or secret knowledge.
+The Mission
 
-This isn't just about accessibility. It's about honesty.
-Technology that breaks easily, confuses users, and can't be repaired isn't serving humans. It's serving planned obsolescence.
-CRUMB is physically tough, easy to use, and completely repairable. That's not optional—it's foundational.
+Teach anyone to build a computer from absolute zero.
+Not "follow these steps and hope it works." Actually understand:
+
+What's happening inside the components
+Why each line of code matters
+How to fix it when something breaks
+
+Once you've built one thing, you realize you can build anything.
+
+What CRUMB Actually Is
+
+CRUMB isn't a product you buy. It's a foundation you build on.
+The curriculum:
+
+Earth Book: Fundamentals (bits, binary, first program, buttons)
+Fire Book: Sensing (LCD, sensors, motion detection)
+Water Book: Connectivity (WiFi, APIs, AI integration)
+Air Book: Independence (battery, PCB, case, standalone device)
+
+15 videos. $30 in parts. Zero to AI companion.
+
+Start with "What's inside a computer?" End with "I built a device that talks to AI."
+Same $12 microcontroller throughout. Different capabilities at each stage.
+
+Platform Over Product
+
+CRUMB succeeds when we're NOT the bottleneck.
+Like Arduino. Like Linux. Like Wikipedia.
+The value isn't what I build directly—it's what YOU build on the foundation I provide.
+Some people will build meditation timers. Others will build plant monitors, focus tools, accessibility devices, or things I haven't imagined yet.
+You maintain the build. You create the future.
+
 Why Open Source Matters
-Open source isn't just a license. It's a statement:
-This knowledge belongs to all of us.
-When you open source hardware, you're saying:
+
+Open source isn't just a license. It's a statement: This knowledge belongs to all of us.
+When you open-source hardware:
 
 You can fix it (no "warranty void" stickers)
 You can modify it (no locked bootloaders)
 You can learn from it (no hidden documentation)
 You can build on it (no permission required)
 
-GPL-3.0 specifically: You can build it, modify it, sell it, keep it private while developing. Just: if you distribute it, share the source. Keep the knowledge flowing.
+GPL-3.0: You can build it, sell it, modify it, keep it private while developing. Just: if you distribute, share the source. Keep the knowledge flowing.
 This isn't anti-profit. It's pro-knowledge.
-Companies can still make money (Red Hat, Arduino, Raspberry Pi all prove this). But they can't monopolize understanding.
+
 The Unfair Advantage (Why Now)
+
 You have AI. Previous generations didn't.
-This changes everything.
-Before: You get stuck → Google for hours → Maybe find an answer → Maybe understand it
-Now: You get stuck → Ask AI → Get explanation in 30 seconds → Get working code if needed
+Before: Get stuck → Google for hours → Maybe find an answer
+Now: Get stuck → Ask AI → Get explanation in 30 seconds → Get working code
 The best teacher of a computer is another computer.
-AI doesn't judge you for not knowing. It doesn't get impatient. It doesn't gatekeep. It just explains, rewrites, debugs, teaches.
-This is why NOW is the easiest time in history to learn this. The wall is lower than it's ever been.
+AI doesn't judge. It doesn't gatekeep. It just explains, rewrites, debugs, teaches.
+This is the easiest time in history to learn this. The wall is lower than ever.
+
+How to Build Along
+
+Start here: https://www.youtube.com/@Wyetherp-1 → Earth Book 1
+Watch in order. Each video builds on the last. Skip one, you'll be lost.
+You don't need:
+
+A CS degree
+Prior programming experience
+Expensive tools
+Permission
+
+You need:
+
+$12 for the first chip
+15 minutes for Genesis Zero
+Curiosity about how things actually work
+
+
 What Success Looks Like
+
 CRUMB succeeds when:
 
 Someone builds Genesis Zero and realizes "I can do this"
-A parent and kid build it together and both learn something
-Someone modifies CRUMB for a need we never imagined
-A teacher uses CRUMB to show students technology isn't magic
+A parent and kid build it together and both learn
+Someone modifies CRUMB for a need I never imagined
+A teacher uses it to show students computers aren't magic
 Someone fixes their CRUMB instead of throwing it away
 
 CRUMB fails when:
 
-It's too complicated for beginners
 Documentation assumes expertise
 The community becomes gatekeeping
 We prioritize features over clarity
-We forget the Luke Test
+We forget technology should adapt to humans, not vice versa
 
-Start Here
-You don't need to be "technical." You need to be curious.
-You don't need a CS degree. You need to want to understand.
-You don't need permission. You just need $12, 15 minutes, and willingness to try.
+
+The Luke Test
+
+Every design decision asks:
+
+Physical resilience - Can you break it easily? (If yes, redesign)
+Interface simplicity - Would someone struggle to use this? (If yes, simplify)
+Repair clarity - Can you fix it without specialized tools? (If no, rethink)
+
+This isn't just accessibility. It's honesty.
+Technology that breaks easily, confuses users, and can't be repaired isn't serving humans. It's serving planned obsolescence.
+
+Start Building
+
 The wall only exists if we accept it.
-
 Technology that adapts to you. Knowledge that belongs to everyone.
 Build. Share. Teach. Repeat.
 
 Made by Wyeth Anzilotti
+
 Because my brother deserved technology that worked for him
+
 Because everyone deserves to understand their devices
+
 Because the wall is artificial and we can break it
