@@ -1,7 +1,7 @@
 // ========================================
 // CRUMB Water Book - Video 4 (FINALE)
 // ESP32 + Claude API Integration
-// Teaching CRUMB to Think
+// Teaching CRUMB to Think 
 // ========================================
 
 #include <WiFi.h>
