@@ -1,6 +1,6 @@
 /*
  * ============================================
- * CRUMB Genesis Zero - The Heartbeat 
+ * CRUMB Genesis Zero - The Heartbeat  
  * ============================================
  * 
  * Your first program. An LED that breathes.
