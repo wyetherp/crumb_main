@@ -1,0 +1,282 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+// ============================================
+// DISPLAY CONFIGURATION
+// ============================================
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1  // No reset pin needed for this OLED
+
+// ============================================
+// PIN DEFINITIONS
+// ============================================
+#define HEARTBEAT_PIN 32  // Single LED that pulses continuously
+#define RED_PIN 25        // RGB LED - Red channel
+#define GREEN_PIN 26      // RGB LED - Green channel
+#define BLUE_PIN 27       // RGB LED - Blue channel
+#define BUTTON_PIN 33     // Push button for interaction
+
+// ============================================
+// GLOBAL OBJECTS & VARIABLES
+// ============================================
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+int messageIndex = 0;           // Current message being displayed
+bool lastButtonState = HIGH;    // Previous button state for edge detection
+
+// ============================================
+// MESSAGE ARRAY
+// ============================================
+// Tennis quotes & hype (kept short to fit on OLED screen)
+const char* messages[] = {
+  "Ace it!",
+  "Court time",
+  "Break serve!",
+  "Nate lookin good",
+  "40-Love",
+  "Wyeth needs nap",
+  "No errors",
+  "Backhand BRRR",
+  "Drop shot",
+  "Net play",
+  "Topspin SZN",
+  "Sleepy king",
+  "Let's get it",
+  "Rally mode",
+  "Winners only",
+  "TOSS HIGHER",
+  "Touch grass",
+  "Built diff",
+  "No plastics",
+  "Serve volley",
+  "Clay warrior",
+  "Hard court",
+  "Wyeth yawning",
+  "Pressure OK",
+  "Clean living",
+  "GOAT watches",
+  "Fix that toss",
+  "Poach all",
+  "Organic vibes",
+  "Slice SZN",
+  "Tweener time",
+  "On fumes",
+  "Between legs",
+  "No toxins",
+  "Toss 2 oclock",
+  "Crush it"
+};
+
+const int numMessages = 36;
+
+// ============================================
+// SETUP - Runs once on startup
+// ============================================
+void setup() {
+  // Start serial communication for debugging
+  Serial.begin(115200);
+  
+  // Configure all pins as outputs (LEDs) or inputs (button)
+  pinMode(HEARTBEAT_PIN, OUTPUT);
+  pinMode(RED_PIN, OUTPUT);
+  pinMode(GREEN_PIN, OUTPUT);
+  pinMode(BLUE_PIN, OUTPUT);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);  // Internal pull-up resistor enabled
+  
+  // Initialize OLED display with I2C address 0x3C
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  
+  // ========================================
+  // STARTUP SCREEN
+  // ========================================
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(20, 10);
+  display.println("CRUMB");
+  
+  display.setTextSize(1);
+  display.setCursor(5, 35);
+  display.println("Tennis Hype Machine");
+  display.setCursor(15, 50);
+  display.println("Press for vibes");
+  display.display();
+  
+  // Show rainbow LED animation on startup
+  flashRainbow();
+}
+
+// ============================================
+// MAIN LOOP - Runs continuously
+// ============================================
+void loop() {
+  // Read current button state (LOW = pressed, HIGH = not pressed)
+  bool buttonState = digitalRead(BUTTON_PIN);
+  
+  // ========================================
+  // BUTTON PRESS DETECTION
+  // ========================================
+  // Check if button was just pressed (edge detection: was HIGH, now LOW)
+  if (buttonState == LOW && lastButtonState == HIGH) {
+    // Pick a random message from the array
+    messageIndex = random(0, numMessages);
+    
+    // Display the message on OLED
+    showMessage();
+    
+    // Flash RGB LED with random color
+    celebrateLEDs();
+    
+    // Short delay to debounce button
+    delay(200);
+  }
+  
+  // Store current state for next loop iteration
+  lastButtonState = buttonState;
+  
+  // ========================================
+  // HEARTBEAT LED PULSE ANIMATION
+  // ========================================
+  // Creates smooth breathing effect on heartbeat LED
+  static unsigned long lastPulse = 0;  // Last time we updated brightness
+  static int brightness = 0;            // Current LED brightness (0-255)
+  static bool increasing = true;        // Direction of fade (up or down)
+  
+  // Update brightness every 20ms for smooth animation
+  if (millis() - lastPulse > 20) {
+    lastPulse = millis();
+    
+    if (increasing) {
+      brightness += 3;  // Fade in
+      if (brightness >= 255) {
+        brightness = 255;
+        increasing = false;  // Switch to fade out
+      }
+    } else {
+      brightness -= 3;  // Fade out
+      if (brightness <= 0) {
+        brightness = 0;
+        increasing = true;  // Switch to fade in
+      }
+    }
+    
+    // Apply brightness to heartbeat LED
+    analogWrite(HEARTBEAT_PIN, brightness);
+  }
+}
+
+// ============================================
+// FUNCTION: Display message on OLED
+// ============================================
+void showMessage() {
+  display.clearDisplay();
+  
+  // Draw header text
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(25, 2);
+  display.println("CRUMB says:");
+  
+  // Draw horizontal divider line
+  display.drawLine(0, 12, 128, 12, SSD1306_WHITE);
+  
+  // Display the message in large text, centered
+  display.setTextSize(2);
+  
+  String msg = String(messages[messageIndex]);
+  int msgWidth = msg.length() * 12;  // Approximate pixel width
+  int startX = (128 - msgWidth) / 2;  // Center horizontally
+  if (startX < 0) startX = 5;  // Prevent negative position
+  
+  display.setCursor(startX, 28);
+  display.println(msg);
+  
+  // Push changes to display
+  display.display();
+}
+
+// ============================================
+// FUNCTION: Flash RGB LED with random color
+// ============================================
+void celebrateLEDs() {
+  // Choose random color (0-6)
+  int colorChoice = random(0, 7);
+  
+  // Set RGB pins based on color choice
+  switch(colorChoice) {
+    case 0: // Red
+      digitalWrite(RED_PIN, HIGH);
+      digitalWrite(GREEN_PIN, LOW);
+      digitalWrite(BLUE_PIN, LOW);
+      break;
+    case 1: // Green
+      digitalWrite(RED_PIN, LOW);
+      digitalWrite(GREEN_PIN, HIGH);
+      digitalWrite(BLUE_PIN, LOW);
+      break;
+    case 2: // Blue
+      digitalWrite(RED_PIN, LOW);
+      digitalWrite(GREEN_PIN, LOW);
+      digitalWrite(BLUE_PIN, HIGH);
+      break;
+    case 3: // Yellow (Red + Green)
+      digitalWrite(RED_PIN, HIGH);
+      digitalWrite(GREEN_PIN, HIGH);
+      digitalWrite(BLUE_PIN, LOW);
+      break;
+    case 4: // Cyan (Green + Blue)
+      digitalWrite(RED_PIN, LOW);
+      digitalWrite(GREEN_PIN, HIGH);
+      digitalWrite(BLUE_PIN, HIGH);
+      break;
+    case 5: // Purple (Red + Blue)
+      digitalWrite(RED_PIN, HIGH);
+      digitalWrite(GREEN_PIN, LOW);
+      digitalWrite(BLUE_PIN, HIGH);
+      break;
+    case 6: // White (All colors)
+      digitalWrite(RED_PIN, HIGH);
+      digitalWrite(GREEN_PIN, HIGH);
+      digitalWrite(BLUE_PIN, HIGH);
+      break;
+  }
+  
+  // Keep color lit for 300ms
+  delay(300);
+  
+  // Turn off RGB LED (heartbeat continues independently)
+  digitalWrite(RED_PIN, LOW);
+  digitalWrite(GREEN_PIN, LOW);
+  digitalWrite(BLUE_PIN, LOW);
+}
+
+// ============================================
+// FUNCTION: Rainbow animation on startup
+// ============================================
+void flashRainbow() {
+  // Array of RGB color combinations
+  // Format: {Red, Green, Blue} where 1=ON, 0=OFF
+  int colors[][3] = {
+    {1,0,0},  // Red
+    {1,1,0},  // Yellow
+    {0,1,0},  // Green
+    {0,1,1},  // Cyan
+    {0,0,1},  // Blue
+    {1,0,1}   // Purple
+  };
+  
+  // Cycle through each color
+  for(int i = 0; i < 6; i++) {
+    digitalWrite(RED_PIN, colors[i][0]);
+    digitalWrite(GREEN_PIN, colors[i][1]);
+    digitalWrite(BLUE_PIN, colors[i][2]);
+    delay(100);  // Hold each color for 100ms
+  }
+  
+  // Turn off all RGB channels
+  digitalWrite(RED_PIN, LOW);
+  digitalWrite(GREEN_PIN, LOW);
+  digitalWrite(BLUE_PIN, LOW);
+}
