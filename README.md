@@ -1,150 +1,106 @@
-CRUMB
+# CRUMB
+### Build a soul-bonded AI companion for someone you love.
 
-Build an AI companion from scratch. Understand every component. Own what you make.
+If you have any trouble ask AI for help!
 
-Instead of selling you a device, I'm teaching you to build one.
+$80 in hardware. One Python file. One person it's built for.
 
-What This Is
+---
 
-CRUMB is a free, open-source curriculum that takes you from "What's inside a computer?" to "I just built a device that talks to AI."
-15 videos. $30 in parts. Zero to AI companion.
-No prior experience required. No software engineering degree. No magic.
-Just a complete path from absolute fundamentals to a working, intelligent device you built yourself.
+## Build Ember — The Raspberry Pi Companion
 
-The Curriculum
+Ember is a physical AI companion that lives on a desk, knows its owner's name, and answers questions in plain English. This is the fastest path to a working CRUMB device.
 
-📗 Earth Book (Foundation)
-Understand how computers actually work. Bits, binary, your first program, buttons.
-🔥 Fire Book (Sensing)
-Add sensors. Your computer learns to see, feel, and detect presence.
-🌊 Water Book (Connectivity)
-Connect to WiFi. Pull real-time data. Talk to AI language models.
-💨 Air Book (Independence) — Coming Summer 2026
-Battery power. Custom PCB. 3D-printed case. Standalone companion.
-Watch in order. Each video builds on the last. Skip one, you'll be lost.
+### What You Need
 
-What You'll Build
+| Part | Cost |
+|------|------|
+| Raspberry Pi 4 | ~$40 |
+| 7" DSI Touchscreen | ~$40 |
+| USB Microphone | ~$10 |
+USB Speaker | ~$10 |
 
-By the end, you'll have a palm-sized device that:
+You'll also need:
+- An [Anthropic API key](https://console.anthropic.com) (Claude)
+- An [OpenAI API key](https://platform.openai.com) (Whisper)
 
-Runs on battery power (8+ hours untethered)
-Senses its environment (motion, temperature, distance)
-Connects to the internet (WiFi, APIs, AI models)
-Responds to your presence
-Fits in your pocket
+**Total: ~$80**
 
-And you'll understand how every piece works.
+---
 
-What You Need
+### Setup
 
-To start:
+In terminal
+**1. Install dependencies**
+```bash
+pip install anthropic openai sounddevice scipy pygame numpy
+```
 
-ESP32 board (~$8-12, search "ESP32 DevKit" on Amazon)
-USB cable (data transfer, not just charging)
-Chrome or Edge browser
+**2. Clone this repo**
+```bash
+git clone https://github.com/wyetherp/crumb_main
+cd crumb_main
+```
 
-Eventually:
+**3. Add your API keys**
 
-Sensors (~$10 total)
-LCD display (~$5)
-Battery + components (~$10)
+Open `crumb.py` and find the `ask_claude()` and `transcribe()` functions. Replace the API key strings with your own keys.
 
-Total investment: ~$30 for the complete build.
+**4. Set the name**
 
-Start Here
+At the top of `crumb.py`, find:
+```python
+ARTIFICER_SETS_NAME = "Luke"
+```
+Change `"Luke"` to whoever you're building this for.
 
-→ Watch Earth Book 1 https://www.youtube.com/watch?v=7hc9jpzf6p0
+**5. Run it**
+```bash
+python3 crumb.py
+```
 
-Start with "What's Inside A Computer?"
-Watch in order through Earth → Fire → Water
-Build along as you go
-Ask AI when you get stuck
+---
 
-Each video is 1-3 minutes. No fluff. Just what you need to know.
+### What It Does
 
-Why This Exists
+- **Binding ritual** — first-time attunement that remembers the owner's name forever
+- **Ask CRUMB** — speak a question, get a response from Claude AI
+- **Timer** — focus timer up to 60 minutes
+- **Clock** — current time
+- **Music** — plays up to three local tracks
 
-Technology isn't magic. It's just knowledge you don't have yet.
-The gap between "people who build technology" and "everyone else" is artificial. It's maintained through:
+---
 
-Complexity that serves business models, not understanding
-Documentation written for experts, not learners
-Devices designed to be replaced, not repaired
+### Customize It
 
-CRUMB breaks that wall.
+Everything that makes Ember personal lives at the top of `crumb.py`:
 
-This curriculum exists because my brother Luke deserved technology that worked for him. And because everyone deserves to understand the devices they depend on.
+```python
+ARTIFICER_SETS_NAME = "Luke"     # who it's built for
+CRUMB_SYSTEM_PROMPT = "..."      # its personality
+TRACKS = [...]                   # music file paths
+```
 
-The Philosophy
+The personality is where it becomes yours. Describe who they are, what they love, how they talk. The AI does the rest.
 
-Platform over product.
-CRUMB succeeds when you build something I never imagined. Meditation timer, plant monitor, accessibility device, custom controller—the foundation is the same.
-Open source forever.
+---
 
-GPL-3.0. You can build it, modify it, sell it. Just keep the knowledge flowing.
-Teaching over selling.
+## The ESP32 Path
 
-No paywalls. No subscriptions. No ads. Just education, freely shared.
+Want to understand computing from the ground up before building?
+Start with the [video curriculum](https://www.youtube.com/@Wyetherp-1) — 15 videos, $30 in parts, zero to AI companion.
 
-Your Unfair Advantage
+📗 Earth → 🔥 Fire → 🌊 Water → 💨 Air
 
-You have AI. Previous generations didn't.
-Get stuck at 2am? AI is awake.
-Don't understand an error? AI explains in 30 seconds.
-Feel dumb asking? AI doesn't judge.
-The best teacher of a computer is another computer.
-This is the easiest time in history to learn this. The wall is lower than ever.
+---
 
-Troubleshooting
+## Philosophy
 
-Can't get code to upload?
+Build it for someone specific. That's the whole philosophy.
 
-Try a different USB cable (must support data)
-Try a different USB port
-Paste the error into ChatGPT/Claude—they'll debug it
+GPL-3.0 — build it, modify it, sell it. Keep the knowledge open.
 
-Video unclear?
+---
 
-Ask AI to explain the concept differently
-Open a GitHub discussion
-
-Completely stuck?
-
-Open an issue with: what you tried, what happened, what you expected
-The community (and I) will help
-
-
-What Success Looks Like
-
-CRUMB succeeds when:
-
-You build Genesis Zero and realize "I can do this"
-You modify CRUMB for a need I never imagined
-You fix your device instead of replacing it
-You teach someone else to build
-
-CRUMB fails when:
-
-Documentation assumes expertise
-The community gatekeeps
-We prioritize features over clarity
-
-If you see this happening, call it out. Open an issue. This only works if we keep it accessible.
-
-Community
-
-Questions? Start a discussion
-Bugs? Open an issue
-Show your build: Tag #CRUMBbuild on social media
-Email: wja326@lehigh.edu
-
-
-License
-GPL-3.0
-Build it. Modify it. Sell it. Share it. Just keep it open.
-The knowledge belongs to everyone.
-
-You're a builder now. Go build something.
-
-Made by Wyeth Anzilotti | 2026
-Because the wall is artificial and we can break it
+*Made by Wyeth Anzilotti | 2026*
+*Because the wall is artificial and we can break it.*
