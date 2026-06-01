@@ -38,9 +38,12 @@ pip install anthropic openai sounddevice scipy pygame numpy
 
 **2. Clone this repo**
 ```bash
-git clone https://github.com/wyetherp/crumb_main
+git clone https://github.com/wyetherp/crumb_main/crumb.py
 cd crumb_main
 ```
+
+OR
+Copy paste crumb.py directly into a file on the raspi
 
 **3. Add your API keys**
 
