@@ -30,6 +30,9 @@ You'll also need:
 
 ### Setup
 
+Video Build Guide: 
+https://youtu.be/2e-LP8AQQFI
+
 In terminal
 **1. Install dependencies**
 ```bash
