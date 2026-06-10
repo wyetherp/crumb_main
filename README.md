@@ -3,7 +3,7 @@
 
 If you have any trouble ask AI for help!
 
-$80 in hardware. One Python file. One person it's built for.
+$90 in hardware. One Python file. One person it's built for.
 
 ---
 
@@ -16,15 +16,15 @@ Ember is a physical AI companion that lives on a desk, knows its owner's name, a
 | Part | Cost |
 |------|------|
 | Raspberry Pi 4 | ~$40 |
-| 7" DSI Touchscreen | ~$40 |
-| USB Microphone | ~$10 |
+| 7" DSI Touchscreen | ~$35 |
+| USB Microphone | ~$5 |
 USB Speaker | ~$10 |
 
 You'll also need:
 - An [Anthropic API key](https://console.anthropic.com) (Claude)
 - An [OpenAI API key](https://platform.openai.com) (Whisper)
 
-**Total: ~$80**
+**Total: ~$90**
 
 ---
 
